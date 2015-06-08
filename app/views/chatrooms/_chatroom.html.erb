@@ -1,9 +1,9 @@
 <h1>聊天室一览</h1>
 
-<table class="table">
+<table class="table table-condensed">
   <thead>
     <tr>
-      <th>封面</th>
+      <th class="name">封面</th>
       <th class="name">聊天室</th>
       <th>类型</th>
       <th>流行度</th>
@@ -24,13 +24,13 @@
         <td><%= chatroom.popularity %></td>
         <td><%= chatroom.memnum %></td>
         <td><%= chatroom.roomno %></td>
-        <td class="name"><%= chatroom.user_id %></td>
-        <td class="name"><%= chatroom.created_at %></td>
+        <td class="name"> <%= User.find(chatroom.user_id).username %> </td>
+        <td class="name"><%= time_ago_in_words chatroom.created_at %></td>
         <td><%= link_to '查看', chatroom %></td>
         <td><%= link_to '编辑', edit_chatroom_path(chatroom) %></td>
         <td><%= link_to '删除', chatroom, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-      <tr>
+        <tr>
           <td><%= sanitize(chatroom.description) %></td> 
       </tr>
     <% end %>

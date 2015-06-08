@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603052523) do
+ActiveRecord::Schema.define(version: 20150606102120) do
+
+  create_table "chat_logs", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "chatroom_id"
+    t.text     "content"
+    t.string   "msg_tag"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "chatrooms", force: true do |t|
     t.string   "roomname"
@@ -27,6 +36,19 @@ ActiveRecord::Schema.define(version: 20150603052523) do
     t.text     "description"
   end
 
+  create_table "friendships", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "messages", force: true do |t|
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "room_mems", force: true do |t|
     t.integer  "chatroom_id"
     t.integer  "user_id"
@@ -34,9 +56,9 @@ ActiveRecord::Schema.define(version: 20150603052523) do
     t.datetime "updated_at"
   end
 
-  create_table "roomtags", force: true do |t|
-    t.integer  "chatroomid"
-    t.integer  "tagid"
+  create_table "room_tags", force: true do |t|
+    t.integer  "chatroom_id"
+    t.integer  "tag_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -45,6 +67,17 @@ ActiveRecord::Schema.define(version: 20150603052523) do
     t.string   "tagname"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "user_has_msgs", force: true do |t|
+    t.integer  "sender_id"
+    t.integer  "receiver_id"
+    t.boolean  "send_status",    default: false
+    t.boolean  "receive_status", default: false
+    t.boolean  "is_read",        default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "message_id"
   end
 
   create_table "users", force: true do |t|

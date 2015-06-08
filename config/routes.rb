@@ -1,13 +1,28 @@
 Rails.application.routes.draw do
 
+  get 'user_has_msg/new/:receiver_id' => "user_has_msg#new", :as => "newmsg"
+  post 'user_has_msg/new/:receiver_id' => "message#create"
+  get 'user_has_msg/destroy'
+
   resources :chatrooms
+  resources :users, only: [:create]
+  resources :room_mems
+
   get "signup" => "users#signup", :as => "signup"
   get "login" => "users#login", :as => "login"
   post "create_login_session" => "users#create_login_session"
   delete "logout" => "users#logout", :as => "logout"
-  resources :users, only: [:create]
-  
-  resources :room_mems
+
+  get "home" => "users#home", :as => "home"
+  get "home/edit" => "users#edit", :as => "user"
+  patch "home/edit" => "users#update"
+
+  get "home/sendmsg" => "user_has_msg#send2", :as => "sendmsg" 
+  get "home/recvmsg" => "user_has_msg#recv", :as => "recvmsg"
+
+  get "users/:id" => "users#show", :as => "showuser"
+  post "users/:id" => "users#add_friend", :as => "addfriend"
+  get "chatrooms/enter/:id" => "room_mems#enter", :as => "enterroom"
 
   root 'homepage#index'
   # The priority is based upon order of creation: first created -> highest priority.
